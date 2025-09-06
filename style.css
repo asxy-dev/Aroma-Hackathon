@@ -778,14 +778,12 @@ body {
     font-size: 0.9rem;
   }
 }
-/* Additional styles for Leaflet map markers to match theme */
 .leaflet-container {
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   background: #e5f3ff;
 }
 
-/* Custom marker icons with colored circles */
 .leaflet-marker-icon.custom-marker {
   border-radius: 50%;
   width: 30px !important;
@@ -806,7 +804,6 @@ body {
   z-index: 10000 !important;
 }
 
-/* Marker colors */
 .marker-emergency {
   background-color: #ef4444 !important;
   border: 2px solid #b91c1c !important;
@@ -827,7 +824,6 @@ body {
   border: 2px solid #b45309 !important;
 }
 
-/* Responsive adjustments for map legend */
 @media (max-width: 768px) {
   .map-legend {
     position: static;
@@ -836,7 +832,6 @@ body {
   }
 }
 
-/* Scrollbar styling for modal content */
 .modal-content::-webkit-scrollbar {
   width: 8px;
 }
