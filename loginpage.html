@@ -1,0 +1,228 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodConnect Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom right, #dc2626, #ec4899);
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: -10px;
+      width: calc(100% + 20px);
+      height: 20px;
+      background: rgba(248, 113, 113, 0.4);
+      filter: blur(15px);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:hover::after { opacity: 1; }
+    .card:hover {
+      transform: scale(1.02);
+      border-color: #f87171;
+      box-shadow: 0 10px 25px rgba(248, 113, 113, 0.4);
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+    }
+    h1:hover { color: #b91c1c; }
+    p {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+    p:hover { color: #374151; }
+    .toggle-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    .toggle-buttons button {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: 2px solid #d1d5db;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 1rem;
+    }
+    .toggle-buttons button.active {
+      background: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+    .toggle-buttons button:hover {
+      transform: scale(1.05);
+      border-color: #f87171;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    input {
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 2px solid #d1d5db;
+      outline: none;
+      transition: all 0.2s;
+      font-size: 1rem;
+    }
+    input:hover { border-color: #f87171; }
+    input:focus { border-color: #f87171; box-shadow: 0 0 0 3px rgba(248,113,113,0.3); }
+    .login-btn {
+      padding: 0.75rem;
+      border: none;
+      border-radius: 0.5rem;
+      background: #ef4444;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.3s;
+    }
+    .login-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(248, 113, 113, 0.4);
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 1rem 0;
+    }
+    .divider div { flex: 1; height: 1px; background: #d1d5db; }
+    .divider span { color: #9ca3af; font-size: 0.9rem; }
+    .social-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    .social-buttons button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      border: 2px solid #d1d5db;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .social-buttons button:hover {
+      transform: scale(1.05);
+      border-color: #f87171;
+      background: #f3f4f6;
+    }
+    .signup {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+    .signup a {
+      color: #ef4444;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .signup a:hover { color: #b91c1c; text-decoration: underline; }
+    .ri { vertical-align: middle; font-size: 18px; }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="login-card">
+    <h1>BloodConnect Login</h1>
+    <p>Sign in to continue to your account</p>
+
+    <div class="toggle-buttons">
+      <button id="email-btn" class="active"><i class="ri-mail-line ri"></i> Email</button>
+      <button id="phone-btn"><i class="ri-phone-line ri"></i> Phone</button>
+    </div>
+
+    <form id="login-form">
+      <input type="email" id="email-input" placeholder="Email Address" required>
+      <input type="tel" id="phone-input" placeholder="Phone Number" required style="display:none;">
+      <input type="password" placeholder="Password" required>
+      <button type="submit" class="login-btn"><i class="ri-lock-line ri"></i> Login</button>
+    </form>
+
+    <div class="divider"><div></div><span>or</span><div></div></div>
+
+    <div class="social-buttons">
+      <button><i class="ri-google-line ri"></i> Google</button>
+      <button><i class="ri-facebook-line ri"></i> Facebook</button>
+    </div>
+
+    <div class="signup">
+      Don’t have an account? <a href="/register">Sign up</a>
+    </div>
+  </div>
+
+  <script>
+    const emailBtn = document.getElementById('email-btn');
+    const phoneBtn = document.getElementById('phone-btn');
+    const emailInput = document.getElementById('email-input');
+    const phoneInput = document.getElementById('phone-input');
+
+    emailBtn.addEventListener('click', () => {
+      emailBtn.classList.add('active');
+      phoneBtn.classList.remove('active');
+      emailInput.style.display = 'block';
+      phoneInput.style.display = 'none';
+    });
+
+    phoneBtn.addEventListener('click', () => {
+      phoneBtn.classList.add('active');
+      emailBtn.classList.remove('active');
+      phoneInput.style.display = 'block';
+      emailInput.style.display = 'none';
+    });
+
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Login submitted!');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Management Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </div>
+                <h2>Blood </h2>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-tab="overview">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                            </svg>
+                            Overview
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="users">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 7c0-2.21-1.79-4-4-4S8 4.79 8 7s1.79 4 4 4 4-1.79 4-4zM12 14c-3.86 0-7 1.79-7 4v1h14v-1c0-2.21-3.14-4-7-4z"/>
+                            </svg>
+                            User Management
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="requests">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                            </svg>
+                            Blood Requests
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="analytics">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/>
+                            </svg>
+                            Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="security">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11C15.4,11 16,11.4 16,12V16C16,16.6 15.6,17 15,17H9C8.4,17 8,16.6 8,16V12C8,11.4 8.4,11 9,11V10C9,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.2,9 10.2,10V11H13.8V10C13.8,9 12.8,8.2 12,8.2Z"/>
+                            </svg>
+                            Security
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        
+        <main class="main-content">
+            
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                        </svg>
+                    </button>
+                    <h1>Dashboard</h1>
+                    <p style="color: var(--text-secondary); margin-top: 4px;">Welcome back, Admin</p>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" id="themeToggle">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.25A9.75 9.75 0 0 0 2.25 12a9.75 9.75 0 0 0 9.75 9.75c.896 0 1.77-.122 2.592-.348a6.721 6.721 0 0 1-2.592-5.402A6.75 6.75 0 0 1 18.75 9c.896 0 1.77.122 2.592.348A9.721 9.721 0 0 0 12 2.25Z"/>
+                        </svg>
+                    </button>
+                    <button class="notification-btn">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+                        </svg>
+                        <span class="notification-badge">12</span>
+                    </button>
+                </div>
+            </header>
+
+            
+            <div class="tab-content active" id="overview">
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon" style="background: linear-gradient(135deg, #dc2626, #ef4444);">
+                                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M16 7c0-2.21-1.79-4-4-4S8 4.79 8 7s1.79 4 4 4 4-1.79 4-4zM12 14c-3.86 0-7 1.79-7 4v1h14v-1c0-2.21-3.14-4-7-4z"/>
+                                </svg>
+                            </div>
+                            <div class="metric-change change-positive">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7 14l5-5 5 5z"/>
+                                </svg>
+                                +12.5%
+                            </div>
+                        </div>
+                        <div class="metric-value">15,420</div>
+                        <div class="metric-label">Total Donors</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon" style="background: linear-gradient(135deg, #10b981, #34d399);">
+                                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                            </div>
+                            <div class="metric-change change-positive">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7 14l5-5 5 5z"/>
+                                </svg>
+                                +8.2%
+                            </div>
+                        </div>
+                        <div class="metric-value">8,732</div>
+                        <div class="metric-label">Active Donors</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon" style="background: linear-gradient(135deg, #3b82f6, #60a5fa);">
+                                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="metric-change change-positive">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7 14l5-5 5 5z"/>
+                                </svg>
+                                +15.7%
+                            </div>
+                        </div>
+                        <div class="metric-value">156</div>
+                        <div class="metric-label">Partner Hospitals</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
+                                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="metric-change change-positive">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7 14l5-5 5 5z"/>
+                                </svg>
+                                +23.1%
+                            </div>
+                        </div>
+                        <div class="metric-value">2,341</div>
+                        <div class="metric-label">Fulfilled Requests</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
+                                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="metric-change change-negative">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7 10l5 5 5-5z"/>
+                                </svg>
+                                -5.3%
+                            </div>
+                        </div>
+                        <div class="metric-value">47</div>
+                        <div class="metric-label">Pending Requests</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon" style="background: linear-gradient(135deg, #ef4444, #f87171);">
+                                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                                </svg>
+                            </div>
+                            <div class="metric-change change-negative">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7 10l5 5 5-5z"/>
+                                </svg>
+                                +2.1%
+                            </div>
+                        </div>
+                        <div class="metric-value">12</div>
+                        <div class="metric-label">Critical Requests</div>
+                    </div>
+                </div>
+
+                
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Blood Group Availability Heatmap</h3>
+                        <div class="search-filter">
+                            <select style="padding: 8px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); color: var(--text-primary);">
+                                <option>All Regions</option>
+                                <option>North Region</option>
+                                <option>South Region</option>
+                                <option>East Region</option>
+                                <option>West Region</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="heatmap-grid">
+                        <div class="blood-group-cell high">
+                            <div class="blood-type">A+</div>
+                            <div class="availability">245 units</div>
+                        </div>
+                        <div class="blood-group-cell medium">
+                            <div class="blood-type">A-</div>
+                            <div class="availability">89 units</div>
+                        </div>
+                        <div class="blood-group-cell high">
+                            <div class="blood-type">B+</div>
+                            <div class="availability">198 units</div>
+                        </div>
+                        <div class="blood-group-cell low">
+                            <div class="blood-type">B-</div>
+                            <div class="availability">34 units</div>
+                        </div>
+                        <div class="blood-group-cell low">
+                            <div class="blood-type">AB+</div>
+                            <div class="availability">67 units</div>
+                        </div>
+                        <div class="blood-group-cell low">
+                            <div class="blood-type">AB-</div>
+                            <div class="availability">23 units</div>
+                        </div>
+                        <div class="blood-group-cell high">
+                            <div class="blood-type">O+</div>
+                            <div class="availability">312 units</div>
+                        </div>
+                        <div class="blood-group-cell medium">
+                            <div class="blood-type">O-</div>
+                            <div class="availability">156 units</div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="two-column">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Donation Trends</h3>
+                            <div class="time-range-selector">
+                                <button class="time-btn active">7D</button>
+                                <button class="time-btn">30D</button>
+                                <button class="time-btn">3M</button>
+                                <button class="time-btn">1Y</button>
+                            </div>
+                        </div>
+                        <canvas id="donationChart" style="height: 300px;"></canvas>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Request Status Distribution</h3>
+                        </div>
+                        <canvas id="statusChart" style="height: 300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="tab-content" id="users">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>User Management</h3>
+                        <div class="search-filter">
+                            <input type="text" class="search-input" placeholder="Search users...">
+                            <button class="filter-btn">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/>
+                                </svg>
+                                Filter
+                            </button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Blood Group</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Last Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Smith</td>
+                                <td>Donor</td>
+                                <td>O+</td>
+                                <td>New York</td>
+                                <td><span class="status-badge status-approved">Active</span></td>
+                                <td>2 hours ago</td>
+                                <td>
+                                    <button class="action-btn">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                               <td>Sarah Johnson</td>
+                                <td>Receiver</td>
+                                <td>A-</td>
+                                <td>Los Angeles</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>1 day ago</td>
+                                <td>
+                                    <button class="action-btn">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Memorial Hospital</td>
+                                <td>Hospital</td>
+                                <td>All Types</td>
+                                <td>Chicago</td>
+                                <td><span class="status-badge status-approved">Verified</span></td>
+                                <td>30 minutes ago</td>
+                                <td>
+                                    <button class="action-btn">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="tab-content" id="requests">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Blood Requests Management</h3>
+                        <div class="search-filter">
+                            <input type="text" class="search-input" placeholder="Search requests...">
+                            <select style="padding: 8px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); color: var(--text-primary);">
+                                <option>All Status</option>
+                                <option>Pending</option>
+                                <option>Approved</option>
+                                <option>Critical</option>
+                                <option>Fulfilled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Request ID</th>
+                                <th>Patient Name</th>
+                                <th>Blood Group</th>
+                                <th>Units Needed</th>
+                                <th>Hospital</th>
+                                <th>Urgency</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#BR001</td>
+                                <td>Emily Davis</td>
+                                <td>O-</td>
+                                <td>3 units</td>
+                                <td>City Hospital</td>
+                                <td><span class="status-badge status-critical">Critical</span></td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="action-btn" style="color: var(--success-color);">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn" style="color: var(--danger-color);">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 13h2v2h-2zm0-8h2v6h-2z"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#BR002</td>
+                                <td>Michael Brown</td>
+                                <td>A+</td>
+                                <td>2 units</td>
+                                <td>General Hospital</td>
+                                <td><span class="status-badge status-pending">Normal</span></td>
+                                <td><span class="status-badge status-approved">Approved</span></td>
+                                <td>
+                                    <button class="action-btn">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="tab-content" id="analytics">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Donation Analytics</h3>
+                        <div class="time-range-selector">
+                            <button class="time-btn active">30D</button>
+                            <button class="time-btn">3M</button>
+                            <button class="time-btn">6M</button>
+                            <button class="time-btn">1Y</button>
+                        </div>
+                    </div>
+                    <canvas id="analyticsChart" style="height: 400px;"></canvas>
+                </div>
+
+                <div class="two-column">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">City Leaderboards</h3>
+                        </div>
+                        <div style="padding: 1rem 0;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color);">
+                                <span>New York</span>
+                                <span style="font-weight: bold;">1,245 donations</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color);">
+                                <span>Los Angeles</span>
+                                <span style="font-weight: bold;">987 donations</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color);">
+                                <span>Chicago</span>
+                                <span style="font-weight: bold;">756 donations</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color);">
+                                <span>Houston</span>
+                                <span style="font-weight: bold;">643 donations</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                                <span>Phoenix</span>
+                                <span style="font-weight: bold;">521 donations</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Demand Forecasting</h3>
+                        </div>
+                        <canvas id="forecastChart" style="height: 300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="tab-content" id="security">
+                <div class="two-column">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Flagged Accounts</h3>
+                            <button class="filter-btn">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/>
+                                </svg>
+                                Review All
+                            </button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Reason</th>
+                                    <th>Risk Level</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Alex Wilson</td>
+                                    <td>Suspicious Activity</td>
+                                    <td><span class="status-badge status-critical">High</span></td>
+                                    <td>
+                                        <button class="action-btn" style="color: var(--danger-color);">
+                                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Maria Garcia</td>
+                                    <td>Multiple Failed Verifications</td>
+                                    <td><span class="status-badge status-pending">Medium</span></td>
+                                    <td>
+                                        <button class="action-btn" style="color: var(--warning-color);">
+                                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Hospital Verification Queue</h3>
+                            <button class="filter-btn">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Verify Selected
+                            </button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Hospital Name</th>
+                                    <th>Location</th>
+                                    <th>Documents</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>St. Mary's Medical</td>
+                                    <td>Boston, MA</td>
+                                    <td><span class="status-badge status-approved">Complete</span></td>
+                                    <td>
+                                        <button class="action-btn" style="color: var(--success-color);">
+                                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </button>
+                                        <button class="action-btn" style="color: var(--danger-color);">
+                                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Regional Health Center</td>
+                                    <td>Dallas, TX</td>
+                                    <td><span class="status-badge status-pending">Pending</span></td>
+                                    <td>
+                                        <button class="action-btn">
+                                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
