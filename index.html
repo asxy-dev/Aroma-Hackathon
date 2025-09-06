@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>BloodConnect</title>
+<title>BloodConnect - Save Lives Through Blood Donation</title>
 <meta name="description" content="Connect blood donors with those in need. Save lives through smart blood donation matching and management." />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -17,6 +18,7 @@
       <li><a href="#home">Home</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#map">Map</a></li>
+      <li><a href="#reviews">Reviews</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-buttons">
@@ -114,6 +116,89 @@
   </div>
 </section>
 
+<section class="reviews" id="reviews">
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">What Our Community Says</h2>
+      <p class="section-subtitle">Real stories from donors and recipients who have used BloodConnect to save lives.</p>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid">
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">R</div>
+          <div class="review-info">
+            <h4>Ram Sharma</h4>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">"BloodConnect helped me find a donor for my mother within 2 hours during an emergency. The system is incredible and truly saves lives."</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">S</div>
+          <div class="review-info">
+            <h4>Sita Patel</h4>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">"As a regular donor, I love how easy it is to register and get notified when my blood type is needed. I've already helped 5 people!"</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">A</div>
+          <div class="review-info">
+            <h4>Arjun Thapa</h4>
+            <div class="review-stars">★★★★☆</div>
+          </div>
+        </div>
+        <p class="review-text">"The map feature is amazing! I can see exactly where blood is needed and plan my donations accordingly. Great platform!"</p>
+      </div>
+    </div>
+    
+    <div class="add-review-form">
+      <h3 style="text-align: center; margin-bottom: 1.5rem; color: #1f2937;">Share Your Experience</h3>
+      <form id="reviewForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" name="reviewerName" required />
+          </div>
+          <div class="form-group">
+            <label>Email (Optional)</label>
+            <input type="email" name="reviewerEmail" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Rating</label>
+          <div class="star-rating">
+            <input type="radio" name="rating" value="5" id="star5" />
+            <label for="star5">★</label>
+            <input type="radio" name="rating" value="4" id="star4" />
+            <label for="star4">★</label>
+            <input type="radio" name="rating" value="3" id="star3" />
+            <label for="star3">★</label>
+            <input type="radio" name="rating" value="2" id="star2" />
+            <label for="star2">★</label>
+            <input type="radio" name="rating" value="1" id="star1" />
+            <label for="star1">★</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Your Experience</label>
+          <textarea name="reviewText" placeholder="Share how BloodConnect helped you or your experience as a donor..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Photo (Optional)</label>
+          <input type="file" name="reviewPhoto" accept="image/*" />
+        </div>
+        <div style="text-align: center;">
+          <button type="submit" class="btn btn-primary">Submit Review</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
 <section class="emergency">
   <div class="emergency-content">
     <h2>Emergency Blood Request</h2>
@@ -161,15 +246,15 @@
       <div class="footer-section">
         <h3>Contact</h3>
         <ul>
-          <li><i class="fas fa-phone"></i> Emergency: 911</li>
-          <li><i class="fas fa-phone"></i> Support: +1-800-BLOOD</li>
-          <li><i class="fas fa-envelope"></i> help@bloodconnect.org</li>
-          <li><i class="fas fa-map-marker-alt"></i> 123 Healthcare Ave</li>
+          <li><i class="fas fa-phone"></i> Emergency: 100</li>
+          <li><i class="fas fa-phone"></i> Support: +977-1-4444444</li>
+          <li><i class="fas fa-envelope"></i> help@bloodconnect.np</li>
+          <li><i class="fas fa-map-marker-alt"></i> Bharatpur, Nepal</li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2024 BloodConnect. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+      <p>&copy; 2024 BloodConnect Nepal. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
     </div>
   </div>
 </footer>
@@ -278,7 +363,7 @@
 
 <div class="loading" id="loadingSpinner">
   <div class="spinner"></div>
-  <p>Processing your request...</p>
+  <p>Processing your requeest...</p>
 </div>
 
 <div id="popupDialog" class="popup-dialog" style="display:none;">
@@ -289,7 +374,6 @@
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="script.js"></script>
 </body>
 </html>
