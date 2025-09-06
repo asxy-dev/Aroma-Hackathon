@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodConnect - Save Lives Through Blood Donation</title>
+    <meta name="description" content="Connect blood donors with those in need. Save lives through smart blood donation matching and management.">
+    
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-heart"></i> BloodConnect
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            
+            <div class="nav-buttons">
+                <a href="#" class="btn btn-primary" onclick="showLogin()">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="#" class="btn btn-secondary" onclick="showRegister()">
+                    <i class="fas fa-user-plus"></i> Register
+                </a>
+            </div>
+            
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Save Lives Through <span style="color: #fecaca;">Smart</span> Blood Donation</h1>
+                <p>Connect with blood donors and recipients in real-time. Make a difference in your community with our intelligent matching system.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary" onclick="becomeDonor()">
+                        <i class="fas fa-tint"></i> Become a Donor
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="requestBlood()">
+                        <i class="fas fa-search"></i> Request Blood
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="emergencyRequest()" style="background: #ef4444; border-color: #ef4444;">
+                        <i class="fas fa-exclamation-triangle"></i> Emergency
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <!-- ADD_IMAGE: Replace with blood donation hero image -->
+                <img src="https://via.placeholder.com/500x400/dc2626/ffffff?text=Blood+Donation+Hero" alt="Blood Donation">
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalDonors">0</span>
+                    <span class="stat-label">Active Donors</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="lifesSaved">0</span>
+                    <span class="stat-label">Lives Saved</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="bloodUnits">0</span>
+                    <span class="stat-label">Blood Units Donated</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="hospitals">0</span>
+                    <span class="stat-label">Partner Hospitals</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">How BloodConnect Works</h2>
+                <p class="section-subtitle">Our platform makes blood donation simple, safe, and efficient through advanced technology and community-driven approach.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3 class="feature-title">Easy Registration</h3>
+                    <p class="feature-description">Quick signup process with social login options. Complete your profile with medical history and preferences.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Smart Matching</h3>
+                    <p class="feature-description">AI-powered matching system connects compatible donors with recipients based on location, blood type, and urgency.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3 class="feature-title">Real-time Notifications</h3>
+                    <p class="feature-description">Instant SMS and email alerts when your blood type is needed nearby or when you're eligible to donate again.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Verified Requests</h3>
+                    <p class="feature-description">All blood requests are verified by registered hospitals and medical professionals to ensure authenticity.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="feature-title">Gamified Experience</h3>
+                    <p class="feature-description">Earn badges, track your impact, and see how many lives you've helped save through your donations.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Donation Scheduling</h3>
+                    <p class="feature-description">Book appointments at nearby blood banks or donation drives with calendar integration and reminders.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Section -->
+    <section class="emergency">
+        <div class="emergency-content">
+            <h2>Emergency Blood Request</h2>
+            <p>Need blood urgently? Our emergency system immediately notifies all compatible donors in your area.</p>
+            
+            <div class="emergency-buttons">
+                <a href="#" class="btn btn-emergency" onclick="emergencyRequest()">
+                    <i class="fas fa-ambulance"></i> Send Emergency Alert
+                </a>
+                <a href="#" class="btn btn-emergency" onclick="showEmergencyHelp()">
+                    <i class="fas fa-question-circle"></i> Emergency Help
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>BloodConnect</h3>
+                    <p>Connecting donors with those in need through smart technology and community care.</p>
+                    <div style="margin-top: 1rem;">
+                        <a href="#" style="margin-right: 1rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="margin-right: 1rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="margin-right: 1rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Become a Donor</a></li>
+                        <li><a href="#">Request Blood</a></li>
+                        <li><a href="#">Find Blood Banks</a></li>
+                        <li><a href="#">Donation Events</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Blood Donation Guide</a></li>
+                        <li><a href="#">Eligibility Checker</a></li>
+                        <li><a href="#">Health & Safety</a></li>
+                        <li><a href="#">Myths vs Facts</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> Emergency: 911</li>
+                        <li><i class="fas fa-phone"></i> Support: +1-800-BLOOD</li>
+                        <li><i class="fas fa-envelope"></i> help@bloodconnect.org</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Healthcare Ave</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 BloodConnect. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Spinner -->
+    <div class="loading" id="loadingSpinner">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
