@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodConnect Database Admin</title>
+    <link rel="stylesheet" href="admin-panel.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>BloodConnect Database Admin Panel</h1>
+        
+        <div class="section">
+            <h2>Database Operations</h2>
+            <button onclick="exportDatabase()">Export Database</button>
+            <button onclick="document.getElementById('importFile').click()">Import Database</button>
+            <input type="file" id="importFile" style="display: none;" accept=".db,.json" onchange="importDatabase(event)">
+            <button onclick="resetDatabase()">Reset Database</button>
+            <button onclick="viewAllData()">View All Data</button>
+        </div>
+
+        <div class="section">
+            <h2>Database Statistics</h2>
+            <div id="stats"></div>
+        </div>
+
+        <div class="section">
+            <h2>Data Viewer</h2>
+            <div id="dataViewer"></div>
+        </div>
+
+        <div id="message"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.min.js"></script>
+    <script src="database.js"></script>
+    <script src="admin-panel.js"></script>
+</body>
+</html>

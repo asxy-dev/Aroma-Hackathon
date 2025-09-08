@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodConnect - Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="logo">
+                <img src="images/logo.png" alt="BloodConnect Logo">
+                BloodConnect
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#profile" class="nav-link" data-section="profile">
+                        <i class="fas fa-user"></i>
+                        My Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#donations" class="nav-link" data-section="donations">
+                        <i class="fas fa-tint"></i>
+                        My Donations
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#requests" class="nav-link" data-section="requests">
+                        <i class="fas fa-search"></i>
+                        Blood Requests
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#events" class="nav-link" data-section="events">
+                        <i class="fas fa-calendar-alt"></i>
+                        Events
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#badges" class="nav-link" data-section="badges">
+                        <i class="fas fa-trophy"></i>
+                        Badges & Rewards
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#nearby" class="nav-link" data-section="nearby">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Nearby Donors
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#settings" class="nav-link" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Back to Home
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="overlay" id="overlay"></div>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="welcome-text">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>Welcome back, <span id="userName">User</span>!</h1>
+                    <p>Ready to make a difference today?</p>
+                </div>
+                
+                <div class="user-menu">
+                    <button class="notification-bell" id="notificationBell">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationCount">3</span>
+                    </button>
+                    
+                    <div class="user-avatar" id="userAvatar">
+                        <span id="userInitials">U</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="profile-completion" id="profileCompletion">
+                <div class="completion-header">
+                    <div>
+                        <h4>Complete your profile to unlock all features</h4>
+                        <p>75% completed - Add medical history and emergency contact</p>
+                    </div>
+                    <button class="btn btn-secondary" id="completeProfileBtn">
+                        Complete Profile
+                    </button>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div id="dashboardContent">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon donations">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                        </div>
+                        <div class="stat-number" id="totalDonations">0</div>
+                        <div class="stat-label">Total Donations</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon requests">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                        <div class="stat-number" id="nearbyRequests">0</div>
+                        <div class="stat-label">Nearby Requests</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon badges">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                        </div>
+                        <div class="stat-number" id="badgesEarned">0</div>
+                        <div class="stat-label">Badges Earned</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon events">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                        <div class="stat-number" id="upcomingEvents">0</div>
+                        <div class="stat-label">Upcoming Events</div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 2rem; text-align: center; background: linear-gradient(135deg, #fef2f2, #fee2e2);">
+                    <h3 style="color: #dc2626; margin-bottom: 1rem;">Emergency Blood Needed?</h3>
+                    <p style="margin-bottom: 1.5rem; color: #64748b;">Send urgent alerts to all compatible donors in your area</p>
+                    <button class="btn btn-emergency" id="emergencyBtn">
+                        <i class="fas fa-ambulance"></i>
+                        Send Emergency Alert
+                    </button>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Recent Blood Requests</h3>
+                            <a href="#" class="btn btn-secondary" id="viewAllRequestsBtn">View All</a>
+                        </div>
+                        
+                        <div id="recentRequests">
+                            <div class="request-item">
+                                <div class="request-info">
+                                    <h4>Emergency: Car Accident Victim</h4>
+                                    <div class="request-meta">
+                                        <span><i class="fas fa-map-marker-alt"></i> City Hospital - 2.3 km</span>
+                                        <span><i class="fas fa-clock"></i> 5 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="request-actions">
+                                    <span class="blood-type">A+</span>
+                                    <span class="urgency high">High</span>
+                                </div>
+                            </div>
+                            
+                            <div class="request-item">
+                                <div class="request-info">
+                                    <h4>Blood Transfusion</h4>
+                                    <div class="request-meta">
+                                        <span><i class="fas fa-map-marker-alt"></i> Metro Hospital - 6.8 km</span>
+                                        <span><i class="fas fa-clock"></i> 1 day ago</span>
+                                    </div>
+                                </div>
+                                <div class="request-actions">
+                                    <span class="blood-type">B+</span>
+                                    <span class="urgency medium">Medium</span>
+                                </div>
+                            </div>
+                            
+                            <div class="request-item">
+                                <div class="request-info">
+                                    <h4>Scheduled Surgery</h4>
+                                    <div class="request-meta">
+                                        <span><i class="fas fa-map-marker-alt"></i> General Hospital - 4.2 km</span>
+                                        <span><i class="fas fa-clock"></i> 2 days ago</span>
+                                    </div>
+                                </div>
+                                <div class="request-actions">
+                                    <span class="blood-type">O-</span>
+                                    <span class="urgency low">Low</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Recent Activity</h3>
+                            <a href="#" class="btn btn-secondary" id="viewAllActivityBtn">View All</a>
+                        </div>
+                        
+                        <div id="activityFeed">
+                            <div class="activity-item">
+                                <div class="activity-icon donation">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <div class="activity-text">
+                                    <h5>Blood Donation Completed</h5>
+                                    <p>You donated 450ml at City Blood Bank</p>
+                                </div>
+                                <div class="activity-time">2 days ago</div>
+                            </div>
+                            
+                            <div class="activity-item">
+                                <div class="activity-icon badge">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="activity-text">
+                                    <h5>Badge Earned: Life Saver</h5>
+                                    <p>Completed 5 successful donations</p>
+                                </div>
+                                <div class="activity-time">1 week ago</div>
+                            </div>
+                            
+                            <div class="activity-item">
+                                <div class="activity-icon request">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <div class="activity-text">
+                                    <h5>Responded to Emergency</h5>
+                                    <p>Helped with urgent O- blood request</p>
+                                </div>
+                                <div class="activity-time">2 weeks ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card badges-section">
+                    <div class="card-header">
+                        <h3 class="card-title">Your Badges</h3>
+                        <a href="#badges" class="btn btn-secondary" id="viewAllBadgesBtn">View All</a>
+                    </div>
+                    
+                    <div class="badges-grid" id="badgesGrid">
+                        <div class="badge-item">
+                            <div class="badge-icon">
+                                <img src="badges/1.png" alt="First Donation Badge">
+                            </div>
+                            <div class="badge-name">First Donation</div>
+                            <div class="badge-desc">Donated blood for the first time</div>
+                        </div>
+                        
+                        <div class="badge-item">
+                            <div class="badge-icon">
+                                <img src="badges/2.png" alt="Regular Donor Badge">
+                            </div>
+                            <div class="badge-name">Regular Donor</div>
+                            <div class="badge-desc">3+ donations completed</div>
+                        </div>
+                        
+                        <div class="badge-item">
+                            <div class="badge-icon locked">
+                                <img src="badges/3.png" alt="Hero Donor Badge">
+                            </div>
+                            <div class="badge-name">Hero Donor</div>
+                            <div class="badge-desc">5+ donations completed</div>
+                        </div>
+                        
+                        <div class="badge-item">
+                            <div class="badge-icon locked">
+                                <img src="badges/4.png" alt="Life Saver Badge">
+                            </div>
+                            <div class="badge-name">Life Saver</div>
+                            <div class="badge-desc">7+ donations completed</div>
+                        </div>
+                         <div class="badge-item">
+                            <div class="badge-icon locked">
+                                <img src="badges/5.png" alt="Legend Badge">
+                            </div>
+                            <div class="badge-name">Godly Saver</div>
+                            <div class="badge-desc">10+ donations completed</div>
+                        </div>
+                         <div class="badge-item">
+                            <div class="badge-icon locked">
+                                <img src="badges/6.png" alt="Life Saver Badge">
+                            </div>
+                            <div class="badge-name">Heavenly Saver</div>
+                            <div class="badge-desc">15+ donations completed</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Quick Actions</h3>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <button class="btn btn-primary" id="scheduleDonationBtn">
+                            <i class="fas fa-calendar-plus"></i>
+                            Schedule Donation
+                        </button>
+                        <button class="btn btn-secondary" id="findBloodBanksBtn">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Find Blood Banks
+                        </button>
+                        <button class="btn btn-secondary" id="updateAvailabilityBtn">
+                            <i class="fas fa-toggle-on"></i>
+                            Update Availability
+                        </button>
+                        <button class="btn btn-secondary" id="inviteFriendsBtn">
+                            <i class="fas fa-user-friends"></i>
+                            Invite Friends
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="profileContent" class="content-section" style="display: none;">
+                <div class="card">
+                    <h2>My Profile</h2>
+                    <div class="profile-form">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" value="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" value="john.doe@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" value="+1 234 567 8900">
+                        </div>
+                        <div class="form-group">
+                            <label for="bloodType">Blood Type</label>
+                            <select id="bloodType">
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" value="New York, USA">
+                        </div>
+                        <button class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="donationsContent" class="content-section" style="display: none;">
+                <div class="card">
+                    <h2>My Donations</h2>
+                    <div class="donation-history">
+                        <div class="donation-item">
+                            <div class="donation-date">15 Sep 2023</div>
+                            <div class="donation-location">City Blood Bank</div>
+                            <div class="donation-amount">450ml</div>
+                            <div class="donation-status completed">Completed</div>
+                        </div>
+                        <div class="donation-item">
+                            <div class="donation-date">10 Jul 2023</div>
+                            <div class="donation-location">Central Hospital</div>
+                            <div class="donation-amount">450ml</div>
+                            <div class="donation-status completed">Completed</div>
+                        </div>
+                        <div class="donation-item">
+                            <div class="donation-date">05 May 2023</div>
+                            <div class="donation-location">Community Center</div>
+                            <div class="donation-amount">450ml</div>
+                            <div class="donation-status completed">Completed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="requestsContent" class="content-section" style="display: none;">
+                <div class="card">
+                    <h2>Blood Requests</h2>
+                    <div class="request-filters">
+                        <button class="btn btn-secondary active">All</button>
+                        <button class="btn btn-secondary">Urgent</button>
+                        <button class="btn btn-secondary">Nearby</button>
+                    </div>
+                    <div id="allRequests">
+                        <div class="request-item">
+                            <div class="request-info">
+                                <h4>Emergency: Car Accident Victim</h4>
+                                <div class="request-meta">
+                                    <span><i class="fas fa-map-marker-alt"></i> City Hospital - 2.3 km</span>
+                                    <span><i class="fas fa-clock"></i> 5 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="request-actions">
+                                <span class="blood-type">A+</span>
+                                <span class="urgency high">High</span>
+                                <button class="btn btn-primary">Respond</button>
+                            </div>
+                        </div>
+                        <div class="request-item">
+                            <div class="request-info">
+                                <h4>Blood Transfusion</h4>
+                                <div class="request-meta">
+                                    <span><i class="fas fa-map-marker-alt"></i> Metro Hospital - 6.8 km</span>
+                                    <span><i class="fas fa-clock"></i> 1 day ago</span>
+                                </div>
+                            </div>
+                            <div class="request-actions">
+                                <span class="blood-type">B+</span>
+                                <span class="urgency medium">Medium</span>
+                                <button class="btn btn-primary">Respond</button>
+                            </div>
+                        </div>
+                        <div class="request-item">
+                            <div class="request-info">
+                                <h4>Scheduled Surgery</h4>
+                                <div class="request-meta">
+                                    <span><i class="fas fa-map-marker-alt"></i> General Hospital - 4.2 km</span>
+                                    <span><i class="fas fa-clock"></i> 2 days ago</span>
+                                </div>
+                            </div>
+                            <div class="request-actions">
+                                <span class="blood-type">O-</span>
+                                <span class="urgency low">Low</span>
+                                <button class="btn btn-primary">Respond</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="eventsContent" class="content-section" style="display: none;">
+                <div class="card">
+                    <h2>Upcoming Events</h2>
+                    <div class="events-list">
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span class="event-day">25</span>
+                                <span class="event-month">Sep</span>
+                            </div>
+                            <div class="event-info">
+                                <h4>Community Blood Drive</h4>
+                                <p><i class="fas fa-map-marker-alt"></i> Central Park, New York</p>
+                            </div>
+                            <button class="btn btn-primary">Register</button>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span class="event-day">03</span>
+                                <span class="event-month">Oct</span>
+                            </div>
+                            <div class="event-info">
+                                <h4>World Blood Donor Day Celebration</h4>
+                                <p><i class="fas fa-map-marker-alt"></i> City Hall Plaza</p>
+                            </div>
+                            <button class="btn btn-primary">Register</button>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span class="event-day">15</span>
+                                <span class="event-month">Oct</span>
+                            </div>
+                            <div class="event-info">
+                                <h4>University Blood Drive</h4>
+                                <p><i class="fas fa-map-marker-alt"></i> NYU Campus</p>
+                            </div>
+                            <button class="btn btn-primary">Register</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="badgesContent" class="content-section" style="display: none;">
+                <div class="card">
+                    <h2>Badges & Rewards</h2>
+                    <div class="badges-grid-full">
+                        <div class="badge-item">
+                            <div class="badge-icon">
+                                <img src="badges/1.png" alt="First Donation Badge">
+                            </div>
+                            <div class="badge-name">First Donation</div>
+                            <div class="badge-desc">Donated blood for the first time</div>
+                            <div class="badge-status earned">Earned</div>
+                        </div>
+                        <div class="badge-item">
+                            <div class="badge-icon">
+                                <img src="badges/2.png" alt="Regular Donor Badge">
+                            </div>
+                            <div class="badge-name">Regular Donor</div>
+                            <div class="badge-desc">3+ donations completed</div>
+                            <div class="badge-status earned">Earned</div>
+                        </div>
+                        <div class="badge-item">
+                            <div class="badge-icon locked">
+                                <img src="badges/3.png" alt="Hero Donor Badge">
+                            </div>
+                            <div class="badge-name">Hero Donor</div>
+                            <div class="badge-desc">5+ donations completed</div>
+                            <div class="badge-status">2 more donations</div>
+                        </div>
+                        <div class="badge-item">
+                            <div class="badge-icon locked">
+                                <img src="badges/4.png" alt="Life Saver Badge">
+                            </div>
+                            <div class="badge-name">Life Saver</div>
+                            <div class="badge-desc">7+ donations completed</div>
+                            <div class="badge-status">4 more donations</div>
+                        </div>
+                        <div class="badge-item">
+                            <div class="badge-icon locked">
+                                <img src="badges/5.png" alt="Legend Badge">
+                            </div>
+                            <div class="badge-name">Godly Saver</div>
+                            <div class="badge-desc">10+ donations completed</div>
+                            <div class="badge-status">7 more donations</div>
+                        </div>
+                        <div class="badge-item">
+                            <div class="badge-icon locked">
+                                <img src="badges/6.png" alt="Life Saver Badge">
+                            </div>
+                            <div class="badge-name">Heavenly Saver</div>
+                            <div class="badge-desc">15+ donations completed</div>
+                            <div class="badge-status">12 more donations</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="nearbyContent" class="content-section" style="display: none;">
+                <div class="card">
+                    <h2>Nearby Donors</h2>
+                    <div class="map-container" id="map">
+                        <div class="map-placeholder">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <p>Map would load here with nearby donors</p>
+                        </div>
+                    </div>
+                    <div class="donors-list">
+                        <div class="donor-item">
+                            <div class="donor-avatar">JD</div>
+                            <div class="donor-info">
+                                <h4>John Doe</h4>
+                                <p>Blood Type: A+ | 1.2 km away</p>
+                            </div>
+                            <button class="btn btn-secondary">Contact</button>
+                        </div>
+                        <div class="donor-item">
+                            <div class="donor-avatar">AS</div>
+                            <div class="donor-info">
+                                <h4>Alice Smith</h4>
+                                <p>Blood Type: O- | 2.5 km away</p>
+                            </div>
+                            <button class="btn btn-secondary">Contact</button>
+                        </div>
+                        <div class="donor-item">
+                            <div class="donor-avatar">RJ</div>
+                            <div class="donor-info">
+                                <h4>Robert Johnson</h4>
+                                <p>Blood Type: B+ | 3.1 km away</p>
+                            </div>
+                            <button class="btn btn-secondary">Contact</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="settingsContent" class="content-section" style="display: none;">
+                <div class="card">
+                    <h2>Settings</h2>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label for="notifications">Notifications</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="notifications" checked>
+                                <label for="notifications"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="locationAccess">Location Access</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="locationAccess" checked>
+                                <label for="locationAccess"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="privacy">Private Profile</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="privacy">
+                                <label for="privacy"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="language">Language</label>
+                            <select id="language">
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="de">German</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="custom-alert" id="customAlert">
+        <div class="alert-content">
+            <div class="alert-icon" id="alertIcon"></div>
+            <h3 id="alertTitle">Alert Title</h3>
+            <p id="alertMessage">This is an alert message.</p>
+            <button class="btn btn-primary" id="alertButton">OK</button>
+        </div>
+    </div>
+
+    <div class="badge-unlock-modal" id="badgeUnlockModal">
+        <div class="modal-content">
+            <div class="badge-icon unlocked">
+                <img src="" alt="Unlocked Badge" id="unlockedBadgeImage">
+            </div>
+            <h3>Congratulations!</h3>
+            <p>You've unlocked a new badge: <span id="unlockedBadgeName"></span></p>
+            <button class="btn btn-primary" id="closeBadgeModal">Awesome!</button>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

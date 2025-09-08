@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BloodConnect</title>
+<meta name="description" content="Connect blood donors with those in need. Save lives through smart blood donation matching and management." />
+<link rel="icon" href="images/logo.png" type="image/png" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ 
+
+<div id="invitePopup" class="invite-popup">
+  <div class="invite-box">
+    <img src="images/event.png" alt="Invitation">
+    <button id="inviteClose" class="invite-close">&times;</button>
+  </div>
+</div>
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo"><img src="images/logo.png" alt="BloodConnect Logo"><span></span></a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#past-events">Events</a></li>
+      <li><a href="#map">Map</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-buttons" id="navButtons">
+      <a href="#" class="btn btn-primary" id="btnBecomeDonor"><i class="fas fa-tint"></i> Become a Donor</a>
+      <a href="#" class="btn btn-secondary" id="btnRequestBlood"><i class="fas fa-search"></i> Request Blood</a>
+    </div>
+    <div class="user-menu" id="userMenu">
+      <div class="user-avatar" id="userAvatar">
+        <span id="userInitials">?</span>
+      </div>
+      <div class="user-dropdown">
+        <a href="#" id="dashboardLink">Dashboard</a>
+        <a href="#" id="logoutLink">Logout</a>
+      </div>
+    </div>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1>Save Lives Through <span style="color: #ffffff;">Smart</span> Blood Donation</h1>
+      <p>Connect with blood donors and recipients in real-time. Make a difference in your community with our intelligent matching system.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary" id="heroBecomeDonor"><i class="fas fa-tint"></i> Become a Donor</a>
+        <a href="#" class="btn btn-secondary" id="heroRequestBlood"><i class="fas fa-search"></i> Request Blood</a>
+        <a href="#" class="btn btn-secondary emergency-btn" id="heroEmergency" style="background: #ef4444; border-color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Emergency</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="slideshow-container">
+        <div class="slides">
+          <div class="slide">
+            <div class="slide-info">
+              <h3>Community Blood Drive</h3>
+              <p>Join our regular community blood donation events</p>
+            </div>
+          </div>
+          <div class="slide">
+            <div class="slide-info">
+              <h3>Emergency Response</h3>
+              <p>24/7 emergency blood matching and delivery</p>
+            </div>
+          </div>
+          <div class="slide">
+            <div class="slide-info">
+              <h3>Mobile Blood Bank</h3>
+              <p>Bringing donation centers to your location</p>
+            </div>
+          </div>
+          <div class="slide">
+            <div class="slide-info">
+              <h3>Digital Platform</h3>
+              <p>Smart technology connecting donors and recipients</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stats-container">
+    <div class="stats-grid">
+      <div class="stat-item"><span class="stat-number" id="totalDonors">0</span><span class="stat-label">Active Donors</span></div>
+      <div class="stat-item"><span class="stat-number" id="lifesSaved">0</span><span class="stat-label">Lives Saved</span></div>
+      <div class="stat-item"><span class="stat-number" id="bloodUnits">0</span><span class="stat-label">Blood Units Donated</span></div>
+      <div class="stat-item"><span class="stat-number" id="hospitals">0</span><span class="stat-label">Partner Hospitals</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">How BloodConnect Works</h2>
+      <p class="section-subtitle">Our platform makes blood donation simple, safe, and efficient through advanced technology and community-driven approach.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-user-plus"></i></div>
+        <h3 class="feature-title">Easy Registration</h3>
+        <p class="feature-description">Quick signup process with social login options. Complete your profile with medical history and preferences.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <h3 class="feature-title">Smart Matching</h3>
+        <p class="feature-description">AI-powered matching system connects compatible donors with recipients based on location, blood type, and urgency.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-bell"></i></div>
+        <h3 class="feature-title">Real-time Notifications</h3>
+        <p class="feature-description">Instant SMS and email alerts when your blood type is needed nearby or when you're eligible to donate again.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3 class="feature-title">Verified Requests</h3>
+        <p class="feature-description">All blood requests are verified by registered hospitals and medical professionals to ensure authenticity.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-trophy"></i></div>
+        <h3 class="feature-title">Gamified Experience</h3>
+        <p class="feature-description">Earn badges, track your impact, and see how many lives you've helped save through your donations.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-calendar-alt"></i></div>
+        <h3 class="feature-title">Donation Scheduling</h3>
+        <p class="feature-description">Book appointments at nearby blood banks or donation drives with calendar integration and reminders.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="past-events" id="past-events">
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">Past Donation Events</h2>
+      <p class="section-subtitle">Celebrating successful blood donation campaigns that brought our community together to save lives.</p>
+    </div>
+    <div class="events-grid">
+      <div class="event-card" data-image="images/1.png">
+        <div class="event-image" style="background-image: url('images/1.png');">
+          <div class="event-overlay">
+            <div class="event-text">2024 Blood Donation Campaign - City Center Mall</div>
+          </div>
+        </div>
+      </div>
+      <div class="event-card" data-image="images/2.png">
+        <div class="event-image" style="background-image: url('images/2.png');">
+          <div class="event-overlay">
+            <div class="event-text">University Health Drive 2024 - Collecting Hope</div>
+          </div>
+        </div>
+      </div>
+      <div class="event-card" data-image="images/3.png">
+        <div class="event-image" style="background-image: url('images/3.png');">
+          <div class="event-overlay">
+            <div class="event-text">Corporate Blood Drive - Tech Companies Unite</div>
+          </div>
+        </div>
+      </div>
+      <div class="event-card" data-image="images/4.png">
+        <div class="event-image" style="background-image: url('images/4.png');">
+          <div class="event-overlay">
+            <div class="event-text">Community Health Fair 2024 - Save Lives Together</div>
+          </div>
+        </div>
+      </div>
+      <div class="event-card" data-image="images/5.png">
+        <div class="event-image" style="background-image: url('images/5.png');">
+          <div class="event-overlay">
+            <div class="event-text">Red Cross Partnership Event - Emergency Preparedness</div>
+          </div>
+        </div>
+      </div>
+      <div class="event-card" data-image="images/6.png">
+        <div class="event-image" style="background-image: url('images/6.png');">
+          <div class="event-overlay">
+            <div class="event-text">Youth Blood Donation Day - Next Generation Donors</div>
+          </div>
+        </div>
+      </div>
+      <div class="event-card" data-image="images/7.png">
+        <div class="event-image" style="background-image: url('images/7.png');">
+          <div class="event-overlay">
+            <div class="event-text">Holiday Season Blood Drive - Gift of Life 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="event-card" data-image="images/8.png">
+        <div class="event-image" style="background-image: url('images/8.png');">
+          <div class="event-overlay">
+            <div class="event-text">Marathon Blood Collection - Sports for Health</div>
+          </div>
+        </div>
+      </div>
+      <div class="event-card" data-image="images/9.png">
+        <div class="event-image" style="background-image: url('images/9.png');">
+          <div class="event-overlay">
+            <div class="event-text">World Blood Donor Day 2024 - Heroes Among Us</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="map-section" id="map">
+  <div class="map-container">
+    <div class="map-wrapper">
+      <div class="map-header">
+        <h2><i class="fas fa-map-marked-alt"></i> Live Blood Donation Map</h2>
+        <p>Realtime view of donors, requests, emergencies, and events in your area</p>
+      </div>
+      <div id="map" class="map-content"></div>
+      <div class="map-legend">
+        <div class="legend-item"><div class="legend-dot" style="background: #ef4444;"></div><span>Emergency</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background: #10b981;"></div><span>Donors</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background: #3b82f6;"></div><span>Hospitals</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background: #f59e0b;"></div><span>Events</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">Hospital Registration Pricing</h2>
+      <p class="section-subtitle">Choose the perfect plan for your hospital to connect with our blood donation network.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-title">Basic</div>
+        <div class="pricing-price">Rs 2,500<span style="font-size: 1rem; font-weight: 400;">/month</span></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check"></i> Access to routine urgency patients</li>
+          <li><i class="fas fa-check"></i> Basic blood request management</li>
+          <li><i class="fas fa-check"></i> Email notifications</li>
+          <li><i class="fas fa-check"></i> Monthly reports</li>
+          <li><i class="fas fa-check"></i> 24/7 support</li>
+        </ul>
+        <button class="btn btn-primary" onclick="openPaymentModal('Basic', 2500)" style="background: #dc2626; color: white;">Choose Basic</button>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Popular</div>
+        <div class="pricing-title">Standard</div>
+        <div class="pricing-price">Rs 7,500<span style="font-size: 1rem; font-weight: 400; opacity: 0.8;">/month</span></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check"></i> All Basic features</li>
+          <li><i class="fas fa-check"></i> Access to urgent level patients</li>
+          <li><i class="fas fa-check"></i> Advanced matching algorithm</li>
+          <li><i class="fas fa-check"></i> SMS notifications</li>
+          <li><i class="fas fa-check"></i> Real-time dashboard</li>
+          <li><i class="fas fa-check"></i> Weekly reports</li>
+        </ul>
+        <button class="btn btn-primary" onclick="openPaymentModal('Standard', 7500)" style="background: white; color: #dc2626;">Choose Standard</button>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-title">Advanced</div>
+        <div class="pricing-price">Rs 15,000<span style="font-size: 1rem; font-weight: 400;">/month</span></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check"></i> All Standard features</li>
+          <li><i class="fas fa-check"></i> Access to emergency level patients</li>
+          <li><i class="fas fa-check"></i> Priority donor matching</li>
+          <li><i class="fas fa-check"></i> Emergency alert system</li>
+          <li><i class="fas fa-check"></i> Custom reporting</li>
+          <li><i class="fas fa-check"></i> API access</li>
+          <li><i class="fas fa-check"></i> Dedicated account manager</li>
+        </ul>
+        <button class="btn btn-primary" onclick="openPaymentModal('Advanced', 15000)" style="background: #dc2626; color: white;">Choose Advanced</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">What Our Community Says</h2>
+      <p class="section-subtitle">Real stories from donors and recipients who have used BloodConnect to save lives.</p>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid">
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">R</div>
+          <div class="review-info">
+            <h4>Ram Sharma</h4>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">"BloodConnect helped me find a donor for my mother within 2 hours during an emergency. The system is incredible and truly saves lives."</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">S</div>
+          <div class="review-info">
+            <h4>Sita Patel</h4>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">"As a regular donor, I love how easy it is to register and get notified when my blood type is needed. I've already helped 5 people!"</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">A</div>
+          <div class="review-info">
+            <h4>Arjun Thapa</h4>
+            <div class="review-stars">★★★★☆</div>
+          </div>
+        </div>
+        <p class="review-text">"The map feature is amazing! I can see exactly where blood is needed and plan my donations accordingly. Great platform!"</p>
+      </div>
+    </div>
+    
+    <div class="add-review-form">
+      <h3 style="text-align: center; margin-bottom: 1.5rem; color: #1f2937;">Share Your Experience</h3>
+      <form id="reviewForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" name="reviewerName" required />
+          </div>
+          <div class="form-group">
+            <label>Email (Optional)</label>
+            <input type="email" name="reviewerEmail" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Rating</label>
+          <div class="star-rating">
+            <input type="radio" name="rating" value="5" id="star5" />
+            <label for="star5">★</label>
+            <input type="radio" name="rating" value="4" id="star4" />
+            <label for="star4">★</label>
+            <input type="radio" name="rating" value="3" id="star3" />
+            <label for="star3">★</label>
+            <input type="radio" name="rating" value="2" id="star2" />
+            <label for="star2">★</label>
+            <input type="radio" name="rating" value="1" id="star1" />
+            <label for="star1">★</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Your Experience</label>
+          <textarea name="reviewText" placeholder="Share how BloodConnect helped you or your experience as a donor..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Photo (Optional)</label>
+          <input type="file" name="reviewPhoto" accept="image/*" />
+        </div>
+        <div style="text-align: center;">
+          <button type="submit" class="btn btn-primary">Submit Review</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="emergency">
+  <div class="emergency-content">
+    <h2>Emergency Blood Request</h2>
+    <p>Need blood urgently? Our emergency system immediately notifies all compatible donors in your area.</p>
+    <div class="emergency-buttons">
+      <a href="#" class="btn btn-emergery" id="btnEmergencyAlert"><i class="fas fa-ambulance"></i> Send Emergency Alert</a>
+      <a href="#" class="btn btn-emergency" id="btnEmergencyHelp"><i class="fas fa-question-circle"></i> Emergency Help</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" id="contact">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h3>BloodConnect</h3>
+        <p>Connecting donors with those in need through smart technology and community care.</p>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#">Become a Donor</a></li>
+          <li><a href="#">Request Blood</a></li>
+          <li><a href="#">Find Blood Banks</a></li>
+          <li><a href="#">Donation Events</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="#">Blood Donation Guide</a></li>
+          <li><a href="#">Eligibility Checker</a></li>
+          <li><a href="#">Health & Safety</a></li>
+          <li><a href="#">Myths vs Facts</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <ul>
+          <li><i class="fas fa-phone"></i> Emergency: 100</li>
+          <li><i class="fas fa-phone"></i> Support: +977-1-4444444</li>
+          <li><i class="fas fa-envelope"></i> help@bloodconnect.np</li>
+          <li><i class="fas fa-map-marker-alt"></i> Bharatpur, Nepal</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 BloodConnect Nepal. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+  </div>
+</footer>
+
+<div class="modal" id="donorModal">
+  <div class="modal-content">
+    <h3><i class="fas fa-tint"></i> Become a Donor</h3>
+    <form id="donorForm">
+      <div class="form-group"><label>Full Name</label><input type="text" name="name" required /></div>
+      <div class="form-group"><label>Email</label><input type="email" name="email" required /></div>
+      <div class="form-group"><label>Phone</label><input type="tel" name="phone" required /></div>
+      <div class="form-group">
+        <label>Blood Type</label>
+        <select name="bloodType" required>
+          <option value="">Select Blood Type</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Age</label><input type="number" name="age" min="18" max="65" required /></div>
+      <div class="form-group"><label>Location</label><input type="text" name="location" required /></div>
+      <div class="modal-buttons">
+        <button type="button" class="btn btn-cancel" id="donorCancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Register</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="requestModal">
+  <div class="modal-content">
+    <h3><i class="fas fa-search"></i> Request Blood</h3>
+    <form id="requestForm">
+      <div class="form-group"><label>Patient Name</label><input type="text" name="patientName" required /></div>
+      <div class="form-group"><label>Contact Email</label><input type="email" name="email" required /></div>
+      <div class="form-group"><label>Contact Phone</label><input type="tel" name="phone" required /></div>
+      <div class="form-group">
+        <label>Blood Type Needed</label>
+        <select name="bloodType" required>
+          <option value="">Select Blood Type</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Units Needed</label><input type="number" name="units" min="1" max="10" required /></div>
+      <div class="form-group"><label>Hospital/Location</label><input type="text" name="hospital" required /></div>
+      <div class="form-group">
+        <label>Urgency Level</label>
+        <select name="urgency" required>
+          <option value="">Select Urgency</option>
+          <option value="routine">Routine (3-7 days)</option>
+          <option value="urgent">Urgent (24-48 hours)</option>
+          <option value="emergency">Emergency (Immediate)</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Additional Details</label><textarea name="details" placeholder="Medical condition, special requirements, etc."></textarea></div>
+      <div class="modal-buttons">
+        <button type="button" class="btn btn-cancel" id="requestCancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit Request</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="emergencyModal">
+  <div class="modal-content">
+    <h3 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Emergency Blood Request</h3>
+    <form id="emergencyForm">
+      <div class="form-group"><label>Patient Name</label><input type="text" name="patientName" required /></div>
+      <div class="form-group"><label>Emergency Contact</label><input type="tel" name="emergencyPhone" required /></div>
+      <div class="form-group">
+        <label>Blood Type Needed</label>
+        <select name="bloodType" required>
+          <option value="">Select Blood Type</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Hospital</label><input type="text" name="hospital" required /></div>
+      <div class="form-group"><label>Emergency Details</label><textarea name="details" placeholder="Brief description of emergency..." required></textarea></div>
+      <div class="modal-buttons">
+        <button type="button" class="btn btn-cancel" id="emergencyCancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-emergency" style="background: #ef4444; color: white;">Send Emergency Alert</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="paymentModal">
+  <div class="modal-content">
+    <h3><i class="fas fa-credit-card"></i> Payment - <span id="planName"></span></h3>
+    <p>Amount: Rs <span id="planAmount"></span>/month</p>
+    <form id="paymentForm">
+      <div class="form-group"><label>eSewa Number</label><input type="tel" name="esewaNumber" required /></div>
+      <div class="form-group"><label>eSewa Password</label><input type="password" name="esewaPassword" required /></div>
+      <div class="form-group"><label>eSewa Name</label><input type="text" name="esewaName" required /></div>
+      <div class="form-group"><label>Remarks (Optional)</label><textarea name="remarks" placeholder="Any additional notes..."></textarea></div>
+      <div class="modal-buttons">
+        <button type="button" class="btn btn-cancel" id="paymentCancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Process Payment</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="hospitalModal">
+  <div class="modal-content">
+    <h3><i class="fas fa-hospital"></i> Hospital Registration</h3>
+    <p>Create your hospital admin access credentials</p>
+    <form id="hospitalForm">
+      <div class="form-group"><label>Hospital Email</label><input type="email" name="hospitalEmail" required /></div>
+      <div class="form-group"><label>Admin Password</label><input type="password" name="hospitalPassword" required /></div>
+      <div class="form-group"><label>Confirm Password</label><input type="password" name="confirmPassword" required /></div>
+      <div class="modal-buttons">
+        <button type="button" class="btn btn-cancel" id="hospitalCancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create Account</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="userDetailModal">
+  <div class="modal-content">
+    <h3 id="userDetailTitle">User Details</h3>
+    <div id="userDetailContent"></div>
+    <div class="modal-buttons">
+      <button type="button" class="btn btn-cancel" id="userDetailCloseBtn">Close</button>
+      <button type="button" class="btn-primary" id="requestBloodBtn" style="display: none; background: #dc2626; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 50px; cursor: pointer; font-weight: 600;">Request Blood</button>
+      <button type="button" class="btn-primary" id="donateBloodBtn" style="display: none; background: #10b981; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 50px; cursor: pointer; font-weight: 600;">Donate Blood</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="eventRegisterModal">
+  <div class="modal-content">
+    <h3><i class="fas fa-calendar-plus"></i> Register for Event</h3>
+    <form id="eventRegisterForm">
+      <div class="form-group"><label>Full Name</label><input type="text" name="name" required /></div>
+      <div class="form-group"><label>Email</label><input type="email" name="email" required /></div>
+      <div class="form-group"><label>Phone</label><input type="tel" name="phone" required /></div>
+      <div class="form-group">
+        <label>Blood Type</label>
+        <select name="bloodType" required>
+          <option value="">Select Blood Type</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Age</label><input type="number" name="age" min="18" max="65" required /></div>
+      <div class="modal-buttons">
+        <button type="button" class="btn btn-cancel" id="eventRegisterCancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Register for Event</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="paymentSuccessModal">
+  <div class="modal-content">
+    <div class="payment-success">
+      <div class="payment-success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3>Payment Successful!</h3>
+      <p>Your payment of Rs <span id="successAmount"></span> for the <span id="successPlan"></span> plan has been processed successfully.</p>
+      <button class="btn btn-primary" id="paymentSuccessBtn">Continue</button>
+    </div>
+  </div>
+</div>
+
+<div class="ambulance-modal" id="ambulanceModal">
+  <div class="ambulance-modal-content">
+    <div class="ambulance-icon">
+      <i class="fas fa-ambulance"></i>
+    </div>
+    <h3>Emergency Ambulance Service</h3>
+    <div class="ambulance-status" id="ambulanceStatus">Calling ambulance in <span class="ambulance-timer" id="ambulanceTimer">30</span> seconds</div>
+    <p>An ambulance will be automatically dispatched to your location. Please stay where you are.</p>
+    <div class="modal-buttons">
+      <button class="btn btn-cancel" id="ambulanceCancelBtn">Cancel Request</button>
+    </div>
+  </div>
+</div>
+
+<div class="event-modal" id="eventModal">
+  <div class="event-modal-content">
+    <button class="event-modal-close" id="eventModalClose">&times;</button>
+    <img class="event-modal-image" id="eventModalImage" src="" alt="Event Image">
+  </div>
+</div>
+
+<div class="loading" id="loadingSpinner">
+  <div class="spinner"></div>
+  <p>Processing your request...</p>
+</div>
+
+<div id="popupDialog" class="popup-dialog" style="display:none;">
+  <div class="popup-content">
+    <button class="popup-close" id="popupCloseBtn">&times;</button>
+    <div id="popupDetails"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.min.js"></script>
+<script src="database.js"></script>
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="ZoQvHaMloGq0Z0vwLQUO8";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script> 
+
+<script src="script.js"></script>
+</body>
+</html>
